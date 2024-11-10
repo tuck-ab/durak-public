@@ -135,10 +135,9 @@ impl fmt::Debug for Card {
 impl cmp::PartialOrd for Card {
     fn partial_cmp(&self, other: &Self) -> Option<cmp::Ordering> {
         match (self.trump, other.trump) {
-            (true, true) => self.value.partial_cmp(&other.value),
             (true, false) => Some(cmp::Ordering::Greater),
             (false, true) => Some(cmp::Ordering::Less),
-            (false, false) => self.value.partial_cmp(&other.value),
+            _ => self.value.partial_cmp(&other.value),
         }
     }
 }
@@ -146,10 +145,9 @@ impl cmp::PartialOrd for Card {
 impl cmp::Ord for Card {
     fn cmp(&self, other: &Self) -> cmp::Ordering {
         match (self.trump, other.trump) {
-            (true, true) => self.value.cmp(&other.value),
             (true, false) => cmp::Ordering::Greater,
             (false, true) => cmp::Ordering::Less,
-            (false, false) => self.value.cmp(&other.value),
+            _ => self.value.cmp(&other.value),
         }
     }
 }
