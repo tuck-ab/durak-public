@@ -2,7 +2,7 @@ mod game_pieces;
 
 use std::collections::HashSet;
 
-use game_pieces::{Card, Deck, Suit};
+use game_pieces::{Card, Deck, Suit, Value};
 
 
 fn main() {
@@ -32,10 +32,9 @@ fn score_hand(hand: &Vec<Card>) -> f32 {
     let mut score: f32 = hand
         .iter()
         .map(|c| {
-            (c.value() as u32)
-                + match c.is_trump() {
-                    true => trump_coef,
-                    false => 0,
+                match c.is_trump() {
+                    true => (c.value() as u32) + 1 + (Value::ACE as u32 * 3),
+                    false => 3 * (c.value() as u32),
                 }
         })
         .sum::<u32>() as f32;
